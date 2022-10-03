@@ -1,0 +1,12 @@
+.rhap_container{
+  background-color: #00000196;
+  border-radius: 20px;
+}
+
+.rhap_controls-section{
+    margin: 0 !important;
+  }
+
+.rhap_additional-controls{
+  flex: none !important;
+}
