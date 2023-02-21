@@ -1,28 +1,47 @@
+import { Box, Container, Flex, useBreakpointValue } from '@chakra-ui/react'
 import Head from 'next/head'
-import { Box, Container } from '@chakra-ui/react'
 // import Header from '../Header'
 // import Footer from '../Footer'
 
-const Main = ({ children }) => {
-    return (
-        <Box as='main'>
-            <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <title>LofiRadio - Trang chu</title>
-                <meta name="description" content="LofiRadio's homepage" />
-                <meta name="description" content="Xuandai's homepage" />
-                <meta name="author" content="HermitCrab" />
-                <meta name="author" content="Xuandai" />
-            </Head>
-            {/* <Header path={router.asPath}/> */}
-            <Container maxW='container.xl' pt={10}  minW='100%' minH='100vh' bg='url(https://www.lofi.cafe/gifs/v2WuhMBzb3h5e.gif) no-repeat fixed' bgAttachment='center' bgPosition='center' bgSize='cover' >
-                <Box >
-                    {children}
-                </Box>
-            </Container>
-        </Box>
+const video = 'https://lofi-new.s3.us-east-2.amazonaws.com/seoul/inside+-+night.mp4'
 
-    )
+const Main = ({ children }) => {
+  return (
+    <Box as='main'>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>LofiRadio - Trang chu</title>
+        <meta name="description" content="LofiRadio's homepage" />
+        <meta name="description" content="Xuandai's homepage" />
+        <meta name="author" content="HermitCrab" />
+        <meta name="author" content="Xuandai" />
+      </Head>
+      {/* <Header path={router.asPath}/> */}
+      <Container maxW='container.2xl' p='0'>
+        <Flex
+          w={'100%'}
+          // minH={{base: '85vh', md: '60vh'}}
+          h={'100vh'}
+          position={'relative'}
+          align={'center'}
+        >
+          <video className='videoTag' style={{ width: '100%', height: '100%', objectFit: 'cover' }} autoPlay loop muted>
+            <source src={video} type='video/mp4' />
+          </video>
+          <Flex
+            w={'100%'}
+            position={'absolute'}
+            justify={'center'}
+            px={useBreakpointValue({ base: 4, md: 8 })}
+          // bgGradient={'linear(to-r, blackAlpha.600, transparent)'}
+          >
+            {children}
+          </Flex>
+        </Flex>
+      </Container>
+    </Box>
+
+  )
 }
 
 {/* <Box>

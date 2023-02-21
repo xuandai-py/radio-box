@@ -3,7 +3,7 @@ const ytdl = require('ytdl-core')
 export default async function streaming(req, res) {
     try {
         const url = req.query.url;
-        const videoId = await ytdl.getURLVideoID(url)
+        const videoId = ytdl.getURLVideoID(url)
         const info = await ytdl.getInfo(url)
         let options = { highWaterMark: 1 << 12 };
 
@@ -21,11 +21,11 @@ export default async function streaming(req, res) {
         //         options.filter = (format) => format.isHLS;
         //     }
         // }
-
-        const format = ytdl.chooseFormat(info.formats, {filter: 'audioonly'})
+        // const format = ytdl.filterFormats(info.formats, {filter: 'audioonly'})
+        let format = ytdl.chooseFormat(info.formats, 'audioonly');
         const data = {
             url: "https://www.youtube.com/embed/" + videoId,
-            info: format
+            format: format,
         }
         return res.send(data)
     } catch (error) {

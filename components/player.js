@@ -1,9 +1,15 @@
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import { useContext } from 'react'
 
 export const Player = ({ trackUri }) => {
 
+    const handleClickNExt = (items) => {
+
+    }
     console.log('track', trackUri);
+
+
     return (
         <>
             <AudioPlayer
@@ -22,7 +28,7 @@ export const Player = ({ trackUri }) => {
                     margin: '0 auto',
                 }}
                 onClickNext={() => console.log(trackUri)}
-            />
+            /> 
         </>
 
     )
