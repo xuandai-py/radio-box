@@ -1,48 +1,57 @@
-import { Modal, Box, SimpleGrid, ModalContent, ModalOverlay } from '@chakra-ui/react'
+import { Modal, ModalBody, Box, SimpleGrid, ModalContent, ModalOverlay } from '@chakra-ui/react'
 import { CardItem } from './cardItem'
-
-const YTB_W = 'https://www.youtube.com/watch?v='
-const dlVideo = 'http://localhost:3000/api/stream?url='
+import { handleChangePlayer, useFetchTrack } from './fn'
+import { useState, useEffect } from 'react'
 
 export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose }) => {
+    const [track, setTrack] = useState('')
+    const [err, setErr] = useState('')
+    const { status, data, error } = useFetchTrack(track)
+    console.log('data: ', data)
+    setTrackUri(data.format?.url)
 
-    const handleChangePlayer = (item) => {
-        if (item && item.id.videoId != null) {
-            fetch(`${dlVideo}${YTB_W}${item.id.videoId}`, {headers: {Range: 'bytes=0-10380331'}})
-                .then((response) => response.json())
-                .then((playUrl) => {
-                    console.log('playurl: ', playUrl)
-                    setTrackUri(playUrl.format.url)
-                })
-                .catch((err) => console.error(err))
+
+    const handleChangePlayer = (item, index) => {
+        if (item && item.id.videoId) {
+            const id = item.id.videoId
+            setTrack(id)
+        } else {
+            setErr('Something Wrong happened - Let try another one')
+            console.error(err);
         }
+        // setId
         onClose()
+        // need to handle getFailedTrack()
         // handle 404
     }
-    return (
-        <Modal isCentered isOpen={isOpen} onClose={onClose}>
-            {overlay}
-            <ModalContent maxW='90%' h='70%' bg='none' alignItems='center' >
-                <SimpleGrid columns={[1, 2, 3, 5]} spacing='30px'>
-                    {items.map((item) => (
-                        <Box key={item.id.videoId} onClick={() => { handleChangePlayer(item) }} cursor='pointer'>
-                            <CardItem
-                                title={item.snippet.title}
-                                thumbnail={item.snippet.thumbnails.medium.url}
-                                link={`https://www.youtube.com/watch?v=${item.id.videoId}`}
-                            />
-                        </Box>
-                    )
-                    )}
 
-                </SimpleGrid>
+  
+
+    return (
+        <Modal scrollBehavior={'outside'} isOpen={isOpen} size={'6xl'} onClose={onClose}>
+            {/* {overlay} */}
+            <ModalOverlay
+                bg='blackAlpha.300'
+                backdropFilter='blur(10px)'
+            />
+            <ModalContent bg='none' py={4} mx={{ base: 4, md: 5, xl: 0 }}>
+                <ModalBody>
+                    <SimpleGrid columns={[1, 2, 3, 4]} spacing='30px'>
+                        {items.map((item, index) => (
+                            <Box key={item.id.videoId} onClick={() => handleChangePlayer(item, index)} cursor='pointer'>
+                                <CardItem
+                                    title={item.snippet.title}
+                                    thumbnail={item.snippet.thumbnails.medium.url}
+                                    link={`${process.env.NEXT_PUBLIC_YTB_W}${item.id.videoId}`}
+                                />
+                            </Box>
+                        )
+                        )}
+
+                    </SimpleGrid>
+                </ModalBody>
             </ModalContent>
         </Modal>
     )
 }
-export const ModalItems = () => (
-    <ModalOverlay
-        bg='blackAlpha.300'
-        backdropFilter='blur(10px)'
-    />
-)
+

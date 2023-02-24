@@ -8,11 +8,8 @@ import Timer, { Clock } from '../components/items/timer'
 import Topbar from '../components/topbar'
 import Sidebar from '../components/sidebar'
 
-
-const YTB_API = 'https://www.googleapis.com/youtube/v3/search'
-
 export async function getStaticProps() {
-  const listItems = await fetch(`${YTB_API}?part=snippet,id&q=lofi&type=video&eventType=completed&maxResults=25&key=${process.env.GG_API}`)
+  const listItems = await fetch(`${process.env.YTB_API}?part=snippet,id&q=lofi&type=video&eventType=completed&maxResults=25&key=${process.env.GG_API}`)
   return {
     props: {
       data: await listItems.json()
@@ -25,7 +22,6 @@ export default function Home({ data }) {
 
   console.log(data)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [overlay, setOverlay] = useState(<ModalItems />)
   const [trackUri, setTrackUri] = useState()
 
 
@@ -36,19 +32,19 @@ export default function Home({ data }) {
       <Sidebar />
       <Button
         onClick={() => {
-          setOverlay(<ModalItems />)
+          // setOverlay(<ModalItems />)
           onOpen()
         }}
       >
         Pick play track
       </Button>
+      <ModalInit setTrackUri={setTrackUri} items={data.items} isOpen={isOpen} onClose={onClose} />
 
       <Box position='absolute' bottom={5} left={0} w='100%'>
         <Player trackUri={trackUri} />
       </Box>
+      {/* item[index].src */}
 
-      <ModalInit setTrackUri={setTrackUri} items={data.items} overlay={overlay} isOpen={isOpen} onClose={onClose} />
-    
     </Container>
   )
 }
