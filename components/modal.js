@@ -3,18 +3,20 @@ import { CardItem } from './cardItem'
 import { handleChangePlayer, useFetchTrack } from './fn'
 import { useState, useEffect } from 'react'
 
-export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose }) => {
-    const [track, setTrack] = useState('')
+export const ModalInit = ({ items, overlay, setIndex, setTrackUri, isOpen, onOpen, onClose }) => {
+
+    // const [track, setTrack] = useState('')
     const [err, setErr] = useState('')
-    const { status, data, error } = useFetchTrack(track)
-    console.log('data: ', data)
-    setTrackUri(data.format?.url)
+    // const { status, dataTrack, error } = useFetchTrack(track)
+    // console.log('dataTrack: ', dataTrack)
+    // setTrackUri(dataTrack.format?.url)
 
 
     const handleChangePlayer = (item, index) => {
         if (item && item.id.videoId) {
-            const id = item.id.videoId
-            setTrack(id)
+            // const id = item.id.videoId
+            // setTrack(id)
+            setIndex(index)
         } else {
             setErr('Something Wrong happened - Let try another one')
             console.error(err);
@@ -25,7 +27,7 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
         // handle 404
     }
 
-  
+
 
     return (
         <Modal scrollBehavior={'outside'} isOpen={isOpen} size={'6xl'} onClose={onClose}>

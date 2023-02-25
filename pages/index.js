@@ -1,15 +1,18 @@
 
 import { Container, Box, Flex, ModalOverlay, useDisclosure, Modal, ModalContent, Button } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { CardItem } from '../components/cardItem'
 import { Player } from '../components/player'
 import { ModalInit, ModalItems } from '../components/modal'
 import Timer, { Clock } from '../components/items/timer'
 import Topbar from '../components/topbar'
 import Sidebar from '../components/sidebar'
+import { useFetchTrack } from '../components/fn'
+import { useThumbContext } from '../components/context/thumb'
+
 
 export async function getStaticProps() {
-  const listItems = await fetch(`${process.env.YTB_API}?part=snippet,id&q=lofi&type=video&eventType=completed&maxResults=25&key=${process.env.GG_API}`)
+  const listItems = await fetch(`${process.env.YTB_API}?part=snippet,id&q=lofi&type=video&eventType=completed&maxResults=${process.env.NEXT_PUBLIC_SONGS_NUMBER}&key=${process.env.GG_API}`)
   return {
     props: {
       data: await listItems.json()
@@ -22,10 +25,25 @@ export default function Home({ data }) {
 
   console.log(data)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [trackUri, setTrackUri] = useState()
+  const trackUri = useRef('')
+  const [trackId, setTrackId] = useState('')
+  const [index, setIndex] = useThumbContext()
+
+  /**
+   const initState = {
+
+   }
+   */
+
+  useEffect(() => {
+    setTrackId(data.items[index].id.videoId)
+  }, [index])
+
+  const { status, dataTrack, error } = useFetchTrack(trackId)
+  trackUri.current =  dataTrack.format?.url
 
 
-
+  console.log(trackId, ' :', trackUri)
   return (
     <Container maxW='container.xl' position='relative' h='100vh' p={2}>
       <Topbar />
@@ -38,13 +56,12 @@ export default function Home({ data }) {
       >
         Pick play track
       </Button>
-      <ModalInit setTrackUri={setTrackUri} items={data.items} isOpen={isOpen} onClose={onClose} />
+
+      <ModalInit setIndex={setIndex} items={data.items} isOpen={isOpen} onClose={onClose} />
 
       <Box position='absolute' bottom={5} left={0} w='100%'>
-        <Player trackUri={trackUri} />
+        <Player trackUri={trackUri.current} />
       </Box>
-      {/* item[index].src */}
-
     </Container>
   )
 }
