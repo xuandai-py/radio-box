@@ -22,7 +22,7 @@ export default async function streaming(req, res) {
         //     }
         // }
         // const format = ytdl.filterFormats(info.formats, {filter: 'audioonly'})
-        let format = ytdl.chooseFormat(info.formats, 'audioonly');
+        let format = ytdl.chooseFormat(info.formats,  {filter: 'audioonly'});
         const data = {
             url: "https://www.youtube.com/embed/" + videoId,
             format: format,

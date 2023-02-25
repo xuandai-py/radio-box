@@ -1,8 +1,6 @@
 import useSWR from 'swr'
 import { useRef, useEffect, useReducer } from 'react'
 
-const NEXT_PUBLIC_YTB_W = 'https://www.youtube.com/watch?v='
-const NEXT_PUBLIC_DLVIDEO = 'http://localhost:3000/api/stream?url='
 
 export default function Fn(id) {
     const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -14,11 +12,12 @@ export default function Fn(id) {
 }
 
 export const useFetchTrack = (trackId) => {
+    
     const cache = useRef({})
     const initialState = {
         status: 'idle',
         error: null,
-        data: [],
+        dataTrack: [],
     };
 
     const [state, dispatch] = useReducer((state, action) => {
@@ -26,7 +25,7 @@ export const useFetchTrack = (trackId) => {
             case 'FETCHING':
                 return { ...initialState, status: 'fetching' };
             case 'FETCHED':
-                return { ...initialState, status: 'fetched', data: action.payload };
+                return { ...initialState, status: 'fetched', dataTrack: action.payload };
             case 'FETCH_ERROR':
                 return { ...initialState, status: 'error', error: action.payload };
             default:
@@ -46,7 +45,9 @@ export const useFetchTrack = (trackId) => {
                 dispatch({ type: 'FETCHED', payload: data });
             } else {
                 try {
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0-10380331' } });
+                    // 0-10380331
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0' } });
+                    console.log(response);
                     const data = await response.json();
                     cache.current[trackId] = data;
                     if (cancelRequest) return;
