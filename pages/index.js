@@ -25,24 +25,18 @@ export default function Home({ data }) {
 
   console.log(data)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const trackUri = useRef('')
+  const [trackUri, setTrackUri] = useState('')
   const [trackId, setTrackId] = useState('')
   const [index, setIndex] = useThumbContext()
 
-  /**
-   const initState = {
-
-   }
-   */
-
+  const { status, dataTrack, error } = useFetchTrack(trackId)
+  
   useEffect(() => {
     setTrackId(data.items[index].id.videoId)
+    setTrackUri(dataTrack.format?.url)
+   
   }, [index])
-
-  const { status, dataTrack, error } = useFetchTrack(trackId)
-  trackUri.current =  dataTrack.format?.url
-
-
+  
   console.log(trackId, ' :', trackUri)
   return (
     <Container maxW='container.xl' position='relative' h='100vh' p={2}>
@@ -54,13 +48,13 @@ export default function Home({ data }) {
           onOpen()
         }}
       >
-        Pick play track
+        Pick play track ss
       </Button>
 
       <ModalInit setIndex={setIndex} items={data.items} isOpen={isOpen} onClose={onClose} />
 
       <Box position='absolute' bottom={5} left={0} w='100%'>
-        <Player trackUri={trackUri.current} />
+        <Player trackUri={trackUri} />
       </Box>
     </Container>
   )
