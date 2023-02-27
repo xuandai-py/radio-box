@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { useRef, useEffect, useReducer } from 'react'
+import { useRef, useEffect, useReducer, useState } from 'react'
 
 
 export default function Fn(id) {
@@ -12,7 +12,7 @@ export default function Fn(id) {
 }
 
 export const useFetchTrack = (trackId) => {
-    
+
     const cache = useRef({})
     const initialState = {
         status: 'idle',
@@ -65,55 +65,26 @@ export const useFetchTrack = (trackId) => {
     }, [trackId]);
     return state
 }
-// export const useFetchTrack = (track) => { // track: {}
-//     const cache = useRef({})
-//     const initialState = {
-//         status: 'idle',
-//         error: null,
-//         data: [],
-//          index: 0
-//     };
+export const useCountdown = (time, timerState, resetTimer) => {
+    const [countDown, setCountDown] = useState(time)
+    useEffect(() => {
+        if (resetTimer) {
+            setCountDown(time)
+        }
+        if (timerState) {
+            countDown > 0 && setTimeout(() => setCountDown(countDown - 1), 1000);
+        } else countDown
+    }, [countDown, time, timerState, resetTimer]);
+    return secondToMinute(countDown)
+}
 
-//     const [state, dispatch] = useReducer((state, action) => {
-//         switch (action.type) {
-//             case 'FETCHING':
-//                 return { ...initialState, status: 'fetching' };
-//             case 'FETCHED':
-//                 return { ...initialState, status: 'fetched', data: action.payload };
-//             case 'FETCH_ERROR':
-//                 return { ...initialState, status: 'error', error: action.payload };
-//             default:
-//                 return state;
-//         }
-//     }, initialState);
+const secondToMinute = (input) => {
+    const minute = addZero(Number.parseInt(input / 60))
+    const second = addZero(input % 60)
+    return `${minute}:${second}`
+}
 
-//     useEffect(() => {
-//         let cancelRequest = false;
-//         console.log("trackId from hook: ", trackId)
-//         if (trackId === '') return;
-
-//         const fetchData = async () => {
-//             dispatch({ type: 'FETCHING' });
-//             if (cache.current[trackId]) {
-//                 const data = cache.current[trackId];
-//                 dispatch({ type: 'FETCHED', payload: data });
-//             } else {
-//                 try {
-//                     const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0-10380331' } });
-//                     const data = await response.json();
-//                     cache.current[trackId] = data;
-//                     if (cancelRequest) return;
-//                     dispatch({ type: 'FETCHED', payload: data });
-//                 } catch (error) {
-//                     if (cancelRequest) return;
-//                     dispatch({ type: 'FETCH_ERROR', payload: error.message });
-//                 }
-//             }
-//         };
-//         fetchData();
-//         return function cleanup() {
-//             cancelRequest = true;
-//         };
-//     }, [trackId]);
-//     return state
-// }
+const addZero = (input) => {
+    if (input < 10) return `0${input}`
+    return input
+}

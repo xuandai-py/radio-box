@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { TimeIcon } from "@chakra-ui/icons"
-import { Box, } from '@chakra-ui/react'
+import { Box, Heading } from '@chakra-ui/react'
 import Base from './base'
 
 const Clock = () => {
@@ -8,25 +8,21 @@ const Clock = () => {
   const [time, setTime] = useState()
 
   useEffect(() => {
-    const timer = setInterval(() => tick(), 1000);
+    const timer = setInterval(() => {
+      setTime((new Date()).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }))
+    }, 1000);
     return () => {
       clearInterval(timer)
     }
   }, []);
 
 
-  const tick = () => {
-    setTime(() => {
-      const hour = (new Date().getHours());
-      const minutes = (new Date().getMinutes());
-      return `${hour}:${minutes}`;
-    })
-  }
-
   return (
     <>
       <Base>
-        {time}
+        <Heading size='lg'>
+          {time}
+        </Heading>
       </Base>
     </>
   )
