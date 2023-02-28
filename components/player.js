@@ -3,24 +3,20 @@ import 'react-h5-audio-player/lib/styles.css';
 import { useContext } from 'react'
 import { useThumbContext } from './context/thumb';
 
-export const Player = (props) => {
-    const { trackUri } = props
+export const Player = () => {
+    
     const playlist = process.env.NEXT_PUBLIC_SONGS_NUMBER
-    const [index, setIndex] = useThumbContext()
+    const {index, setIndex, trackUri} = useThumbContext()
     console.log('track: ', trackUri);
 
     const handleClickPrevious = () => {
         setIndex(() => index === 0 ? playlist - 1 : index - 1)
-        // this.setState((prevState) => ({
-        //     currentMusicIndex: prevState.currentMusicIndex === 0 ? playlist.length - 1 : prevState.currentMusicIndex - 1,
-        // }))
+        
     }
 
     const handleClickNext = () => {
         setIndex(() => index < playlist - 1 ? index + 1 : 0)
-        //     this.setState((prevState) => ({
-        //         currentMusicIndex: prevState.currentMusicIndex < playlist.length - 1 ? prevState.currentMusicIndex + 1 : 0,
-        //     }))
+        
     }
     console.log(index)
 

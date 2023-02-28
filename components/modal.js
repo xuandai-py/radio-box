@@ -2,9 +2,11 @@ import { Modal, ModalBody, Box, SimpleGrid, ModalContent, ModalOverlay } from '@
 import { CardItem } from './cardItem'
 import { handleChangePlayer, useFetchTrack } from './fn'
 import { useState, useEffect } from 'react'
+import { useThumbContext } from './context/thumb'
 
-export const ModalInit = ({ items, overlay, setIndex, setTrackUri, isOpen, onOpen, onClose }) => {
+export const ModalInit = ({ items, overlay,  setTrackUri, isOpen, onOpen, onClose }) => {
 
+    const {setIndex} = useThumbContext()
     // const [track, setTrack] = useState('')
     const [err, setErr] = useState('')
     // const { status, dataTrack, error } = useFetchTrack(track)
