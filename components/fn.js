@@ -65,6 +65,65 @@ export const useFetchTrack = (trackId) => {
     }, [trackId]);
     return state
 }
+
+// index. array > array[i]   --- staticTrack[] --- initTrack[]
+// index > trackId > useFetchTrack > dataTrack > setTrackUri
+// export const useTrackData = (trackId) => {
+
+//     const cache = useRef({})
+//     const initialState = {
+//         index: 0,
+//         trackUri: '',
+//         trackId: '', // init_track only
+//     };
+
+//     const [state, dispatch] = useReducer((state, action) => {
+//         switch (action.type) {
+
+//             case 'SET_INIT_TRACK':
+//                 return { ...initialState, status: 'fetched', dataTrack: action.payload };
+//             case 'SET_STATIC_TRACK':
+//                 return { ...initialState, status: 'fetched', dataTrack: action.payload };
+//             case 'ERROR':
+//                 return { ...initialState, status: 'error', error: action.payload };
+//             default:
+//                 return state;
+//         }
+//     }, initialState);
+
+//     useEffect(() => {
+//         let cancelRequest = false;
+//         console.log("trackId from hook: ", trackId)
+//         if (trackId === '') return;
+
+//         const fetchData = async () => {
+//             dispatch({ type: 'FETCHING' });
+//             if (cache.current[trackId]) {
+//                 const data = cache.current[trackId];
+//                 dispatch({ type: 'FETCHED', payload: data });
+//             } else {
+//                 try {
+//                     // 0-10380331
+//                     const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0' } });
+//                     console.log(response);
+//                     const data = await response.json();
+//                     cache.current[trackId] = data;
+//                     if (cancelRequest) return;
+//                     dispatch({ type: 'FETCHED', payload: data });
+//                 } catch (error) {
+//                     if (cancelRequest) return;
+//                     dispatch({ type: 'FETCH_ERROR', payload: error.message });
+//                 }
+//             }
+//         };
+//         fetchData();
+//         return function cleanup() {
+//             cancelRequest = true;
+//         };
+//     }, [trackId]);
+//     return state
+// }
+
 export const useCountdown = (time, timerState, resetTimer) => {
     const [countDown, setCountDown] = useState(time)
     useEffect(() => {

@@ -1,12 +1,13 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useRef } from "react";
 
 const Context = createContext();
 
 export function ThumbProvider({ children }) {
     const [index, setIndex] = useState(0)
     const [trackUri, setTrackUri] = useState('')
+    const [allTrack, setAllTrack] = useState({})
     return (
-        <Context.Provider value={[index, setIndex, trackUri, setTrackUri]}>{children}</Context.Provider>
+        <Context.Provider value={{index, setIndex, trackUri, setTrackUri, allTrack, setAllTrack}}>{children}</Context.Provider>
     );
 }
 
