@@ -1,11 +1,23 @@
-import { Box, Container, Flex, useBreakpointValue } from '@chakra-ui/react'
+import { Box, Container, Flex, useBreakpointValue, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useEffect } from 'react'
 // import Header from '../Header'
 // import Footer from '../Footer'
 
-const video = 'https://lofi-new.s3.us-east-2.amazonaws.com/seoul/inside+-+night.mp4'
-
+const light = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677541/radio/inside_-_day_h5xz5t.mp4'
+const dark = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677487/radio/inside_-_night_j88h8y.mp4'
 const Main = ({ children }) => {
+
+  const { colorMode, toggleColorMode } = useColorMode()
+  const bgTheme = useColorModeValue(
+    `https://res.cloudinary.com/dxhl09emw/video/upload/v1677677541/radio/inside_-_day_h5xz5t.mp4`,
+    `https://res.cloudinary.com/dxhl09emw/video/upload/v1677677487/radio/inside_-_night_j88h8y.mp4`
+  )
+  useEffect(() => {
+    console.log('color: ', colorMode)
+
+  }, [colorMode])
+
   return (
     <Box as='main'>
       <Head>
@@ -25,9 +37,11 @@ const Main = ({ children }) => {
           position={'relative'}
           align={'center'}
         >
-          <video className='videoTag' style={{ width: '100%', height: '100%', objectFit: 'cover' }} autoPlay loop muted>
-            <source src={video} type='video/mp4' />
-          </video>
+          {colorMode === 'dark' ?
+            <VideoWrapperDark />
+            :
+            <VideoWrapperLight/>
+          }
           <Flex
             w={'100%'}
             position={'absolute'}
@@ -41,6 +55,21 @@ const Main = ({ children }) => {
       </Container>
     </Box>
 
+  )
+}
+
+const VideoWrapperLight = () => {
+  return (
+    <video className='videoTag' style={{ width: '100%', height: '100%', objectFit: 'cover' }} autoPlay loop muted>
+      <source src={light} type='video/mp4' />
+    </video>
+  )
+}
+const VideoWrapperDark = () => {
+  return (
+    <video className='videoTag' style={{ width: '100%', height: '100%', objectFit: 'cover' }} autoPlay loop muted>
+      <source src={dark} type='video/mp4' />
+    </video>
   )
 }
 

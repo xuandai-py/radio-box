@@ -1,6 +1,5 @@
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { useContext } from 'react'
 import { useThumbContext } from './context/thumb';
 
 export const Player = () => {
@@ -24,6 +23,7 @@ export const Player = () => {
         <>
             <AudioPlayer
                 autoPlay
+                loop
                 showFilledProgress={false}
                 showSkipControls={true}
                 showJumpControls={false}
@@ -35,8 +35,8 @@ export const Player = () => {
                 onLoadedData={e => console.log(trackUri)}
                 style={{
                     width: '220px',
-                    margin: '0 auto',
-                    // background: 'none'
+                   
+                    background: 'none'
                 }}
 
                 onClickNext={handleClickNext}
