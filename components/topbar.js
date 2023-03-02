@@ -1,6 +1,4 @@
 import NextLink from 'next/link'
-import ThemeToggleButton from './toggle-button'
-import Clock from './items/timer'
 import { useState } from 'react'
 import {
     Container,
@@ -14,6 +12,7 @@ import {
     MenuList,
     MenuButton,
     IconButton,
+    Image,
     useColorModeValue,
     forwardRef,
     Icon,
@@ -22,8 +21,10 @@ import {
 } from '@chakra-ui/react'
 import { SlSocialFacebook, SlSocialGithub, SlSocialInstagram, SlSocialLinkedin, SlSocialGoogle, SlFire } from 'react-icons/sl'
 import { CiWavePulse1, CiWheat, CiKeyboard, CiCloudDrizzle, CiTwitter, CiPlane } from 'react-icons/ci'
-import Pomodoro from './items/pomodoro'
 import { useThumbContext } from './context/thumb'
+import Pomodoro from './items/pomodoro'
+import ThemeToggleButton from './toggle-button'
+import Clock from './items/timer'
 
 const LinkItem = ({ href, path, target, children, ...props }) => {
     const active = path === href
@@ -53,10 +54,11 @@ const PlayStaticTrackItem = ({ href, children, ...props }) => {
     const setStaticTrack = () => setTrackUri(href)
     return (
         <Button onClick={setStaticTrack}
-            _focus={{ bg: useColorModeValue('whiteAlpha.200', 'whiteAlpha.200'), border: '1px solid' }}
-            _hover={{ bg: useColorModeValue('whiteAlpha.200', 'whiteAlpha.200'), border: '1px solid' }}
+            _focus={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
+            _active={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
+            _hover={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             bg='none' >
-            <Icon as={children} boxSize={6} />
+            <Icon as={children} boxSize={6}     />
         </Button>
     )
 }
@@ -77,7 +79,7 @@ const Topbar = props => {
             w="100%"
             m="0 auto"
             // bgColor="white"
-            bg={useColorModeValue('#ffffff40', '#20202380')}
+            bg={useColorModeValue('#cfd3b280', '#20202380')}
             css={{ backdropFilter: 'blur(5px)' }}
             borderRadius={'lg'}
             //   zIndex={2}
@@ -95,7 +97,7 @@ const Topbar = props => {
                     {/* <Heading as="h1" size="lg" letterSpacing={'tighter'}>
             <Logo />
           </Heading> */}
-                    logo
+                    <Image src='https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg' boxSize={'40px'} objectFit='cover' />
                 </Flex>
                 <Stack
                     direction={{ base: 'column', md: 'row' }}
@@ -112,8 +114,8 @@ const Topbar = props => {
                         {visible && (
                             <Pomodoro />
                         )}
-                        <Tooltip hasArrow label='Pomodoro' bg='red.600'>
-                            <Button onClick={onClick} _hover={{ bg: 'none' }} border='1px solid '>
+                        <Tooltip hasArrow label='Pomodoro' bg='#1DB954'>
+                            <Button onClick={onClick} _hover={{ bg: '#1DB954' }} bg={'#1DB954'} >
                                 <Icon as={CiPlane} boxSize={6} />
                             </Button>
                         </Tooltip>

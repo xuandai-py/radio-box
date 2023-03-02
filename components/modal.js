@@ -18,6 +18,7 @@ export const ModalInit = ({ items, overlay,  setTrackUri, isOpen, onOpen, onClos
         if (item && item.id.videoId) {
             // const id = item.id.videoId
             // setTrack(id)
+console.log(index)            
             setIndex(index)
         } else {
             setErr('Something Wrong happened - Let try another one')

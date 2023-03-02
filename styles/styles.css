@@ -1,6 +1,10 @@
 .rhap_container{
   background-color: #00000196;
   border-radius: 20px;
+  padding: 0 !important;
+  box-shadow: none !important; 
+  width: fit-content !important;
+  min-width: 220px;
 }
 
 .rhap_controls-section{
@@ -9,4 +13,22 @@
 
 .rhap_additional-controls{
   flex: none !important;
+}
+
+.rhap_main-controls-button, 
+.rhap_volume-button, 
+.rhap_volume-bar-area{
+  color: #00000196 !important;
+}
+
+.chakra-night-rhap-control{
+  color: #868686 !important;
+}
+
+.rhap_volume-indicator{
+ background-color: #00000196 !important;
+}
+
+.chakra-night-indicator{
+  background-color: #868686 !important;
 }

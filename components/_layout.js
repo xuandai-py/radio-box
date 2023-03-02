@@ -23,6 +23,7 @@ const Main = ({ children }) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>LofiRadio - Trang chu</title>
+        <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg"></link>
         <meta name="description" content="LofiRadio's homepage" />
         <meta name="description" content="Xuandai's homepage" />
         <meta name="author" content="HermitCrab" />
