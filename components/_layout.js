@@ -6,17 +6,9 @@ import { useEffect } from 'react'
 
 const light = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677541/radio/inside_-_day_h5xz5t.mp4'
 const dark = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677487/radio/inside_-_night_j88h8y.mp4'
+
 const Main = ({ children }) => {
-
-  const { colorMode, toggleColorMode } = useColorMode()
-  const bgTheme = useColorModeValue(
-    `https://res.cloudinary.com/dxhl09emw/video/upload/v1677677541/radio/inside_-_day_h5xz5t.mp4`,
-    `https://res.cloudinary.com/dxhl09emw/video/upload/v1677677487/radio/inside_-_night_j88h8y.mp4`
-  )
-  useEffect(() => {
-    console.log('color: ', colorMode)
-
-  }, [colorMode])
+  const { colorMode} = useColorMode()
 
   return (
     <Box as='main'>
