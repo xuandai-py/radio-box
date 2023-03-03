@@ -1,9 +1,10 @@
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { useThumbContext } from './context/thumb';
+import {  DragHandleIcon } from '@chakra-ui/icons'
+import { IconButton, HStack, useBreakpointValue } from '@chakra-ui/react';
 
-
-export const Player = () => {
+export const Player = (props) => {
 
     
     const playlist = process.env.NEXT_PUBLIC_SONGS_NUMBER
@@ -22,7 +23,7 @@ export const Player = () => {
     console.log(index)
 
     return (
-        <>
+        <HStack spacing={5}>
             <AudioPlayer
                 autoPlay
                 loop
@@ -35,14 +36,15 @@ export const Player = () => {
                 onPlay={e => console.log("onPlay")}
                 onError={e => console.log(e)}
                 onLoadedData={e => console.log(trackUri)}
+                
                 style={{
                     background: 'none'
                 }}
-
                 onClickNext={handleClickNext}
                 onClickPrevious={handleClickPrevious}
             />
-        </>
+            <IconButton onClick={props.handleClick} aria-label='View more tracks' icon={<DragHandleIcon />} />
+        </HStack>
 
     )
 }

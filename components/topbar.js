@@ -94,9 +94,7 @@ const Topbar = props => {
                 justify="center"
             >
                 <Flex align="center" >
-                    {/* <Heading as="h1" size="lg" letterSpacing={'tighter'}>
-            <Logo />
-          </Heading> */}
+                   
                     <Image src='https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg' boxSize={'40px'} objectFit='cover' />
                 </Flex>
                 <Stack

@@ -9,12 +9,15 @@ import Topbar from '../components/topbar'
 import Sidebar from '../components/sidebar'
 import { useFetchTrack } from '../components/fn'
 import { useThumbContext } from '../components/context/thumb'
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, ArrowForwardIcon, DragHandleIcon } from '@chakra-ui/icons'
 import styled from '@emotion/styled'
 import { keyframes, css } from '@emotion/react'
 
 const ScrollContainer = styled.div`
   overflow: hidden;
+  @media screen and (max-width: 300px) {
+    display: none;
+  }
 `
 const my_animation = keyframes`
   from {
@@ -31,6 +34,7 @@ const my_animation = keyframes`
 `
 
 const ScrollText = styled.p`
+  white-space: nowrap;
   -moz-transform: translateX(100%);
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
@@ -90,16 +94,18 @@ export default function Home({ data }) {
         COMINGSOON!
       </Flex>
       <Flex align={'center'} gap={4} m="0 auto"
-        direction={{ base: 'column', md: 'row' }}
+        direction={'row'}
+        justify='left'
+        minW={'10em'}
         bgColor="white"
         bg={useColorModeValue('#ffffff2b', '#8c98d247')}
         css={{ backdropFilter: 'blur(5px)' }}
         borderRadius={'xl'}
       >
-        <Player />
-        <Button onClick={() => { onOpen() }} _hover={{ bg: '#1DB954' }} textTransform={'uppercase'} borderRadius={0} bg={'#1DB954'}>
+        <Player handleClick={onOpen}/>
+        {/* <Button onClick={() => { onOpen() }} _hover={{ bg: '#1DB954' }} textTransform={'uppercase'} borderRadius={0} bg={'#1DB954'}>
           watch more
-        </Button>
+        </Button> */}
         <ScrollContainer>
           <Box onClick={() => { onOpen() }} fontSize={{ base: 'md', xl: 'lg' }} cursor='pointer'>
             <ScrollText css={{

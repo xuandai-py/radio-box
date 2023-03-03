@@ -4,7 +4,6 @@
   padding: 0 !important;
   box-shadow: none !important; 
   width: fit-content !important;
-  min-width: 220px;
 }
 
 .rhap_controls-section{
@@ -31,4 +30,16 @@
 
 .chakra-night-indicator{
   background-color: #868686 !important;
+}
+
+@media only screen and (max-width: 768px) {
+.rhap_volume-controls{
+    display: none !important;
+  }
+
+}
+@media only screen and (min-width: 768px) {
+  .rhap_container{
+    min-width: 220px;
+  }
 }
