@@ -1,34 +1,31 @@
-import NextLink from 'next/link'
-import { useState } from 'react'
 import {
-    Container,
-    Box,
-    Link,
-    Stack,
-    Heading,
-    Flex,
-    Menu,
-    MenuItem,
-    MenuList,
-    MenuButton,
-    IconButton,
-    Image,
-    useColorModeValue,
-    forwardRef,
-    Icon,
-    Tooltip,
-    Button
+    Box, Button, IconButton, Container, Flex, forwardRef,
+    Icon, Image, Link, Avatar,
+    Stack, Tooltip, useColorModeValue, useBreakpointValue,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,
 } from '@chakra-ui/react'
-import { SlSocialFacebook, SlSocialGithub, SlSocialInstagram, SlSocialLinkedin, SlSocialGoogle, SlFire } from 'react-icons/sl'
-import { CiWavePulse1, CiWheat, CiKeyboard, CiCloudDrizzle, CiTwitter, CiPlane } from 'react-icons/ci'
+import NextLink from 'next/link'
+import { DragHandleIcon } from '@chakra-ui/icons'
+import { useState } from 'react'
+import { CiCloudDrizzle, CiShare2, CiDeliveryTruck, CiKeyboard, CiTimer, CiTwitter, CiWavePulse1 } from 'react-icons/ci'
+import { SlFire, SlSocialFacebook, SlSocialGithub, SlSocialGoogle, SlSocialInstagram } from 'react-icons/sl'
 import { useThumbContext } from './context/thumb'
 import Pomodoro from './items/pomodoro'
-import ThemeToggleButton from './toggle-button'
 import Clock from './items/timer'
+import ThemeToggleButton from './toggle-button'
 
 const LinkItem = ({ href, path, target, children, ...props }) => {
     const active = path === href
-    const inactiveColor = useColorModeValue('gray.800', 'whiteAlpha.900')
+
+    const inactiveColor = useColorModeValue('teal.800', 'whiteAlpha.900')
     return (
         <Link
             as={NextLink}
@@ -58,7 +55,7 @@ const PlayStaticTrackItem = ({ href, children, ...props }) => {
             _active={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             _hover={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             bg='none' >
-            <Icon as={children} boxSize={6}     />
+            <Icon as={children} boxSize={6} />
         </Button>
     )
 }
@@ -66,6 +63,31 @@ const PlayStaticTrackItem = ({ href, children, ...props }) => {
 const MenuLink = forwardRef((props, ref) => (
     <Link ref={ref} as={NextLink} {...props} />
 ))
+
+const IconWrapper = ({ style, children }) => (
+    <>
+        <Flex display={{ base: 'none', xl: 'flex' }} align={'center'} gap={4} style={style}>
+            {children}
+        </Flex>
+
+        <Flex display={{ base: 'flex', xl: 'none' }} align={'center'} gap={4} style={style}>
+
+
+            <Popover isLazy>
+                <PopoverTrigger>
+                    <IconButton aria-label='Contact' icon={<DragHandleIcon />} />
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverHeader fontWeight='semibold'>Reach me via: </PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                        {children}
+                    </PopoverBody>
+                </PopoverContent>
+            </Popover> </Flex>
+    </>
+)
 
 
 const Topbar = props => {
@@ -77,7 +99,8 @@ const Topbar = props => {
         <Box
             as="nav"
             w="100%"
-            m="0 auto"
+            py={{ base: 1, xl: 0 }}
+            // m="0 auto"
             // bgColor="white"
             bg={useColorModeValue('#cfd3b280', '#20202380')}
             css={{ backdropFilter: 'blur(5px)' }}
@@ -94,59 +117,67 @@ const Topbar = props => {
                 justify="center"
             >
                 <Flex align="center" >
-                   
+
                     <Image src='https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg' boxSize={'40px'} objectFit='cover' />
                 </Flex>
                 <Stack
-                    direction={{ base: 'column', md: 'row' }}
-                    display={{ base: 'none', md: 'flex' }}
+                    direction={{ base: 'row', md: 'row' }}
+                    // display={{ base: 'none', md: 'flex' }}
                     // width={{ base: 'full', md: 'auto' }}
                     alignItems="center"
                     // justify="center"
                     flexGrow={1}
-                    mt={{ base: 4, md: 0 }}
+                    // mt={{ base: 4, md: 0 }}
                     spacing={4}
 
                 >
-                    <Flex flex={1} align='center' justify='right' gap={4}>
+                    <Flex flex={2} align='center' justify='right' gap={4}>
                         {visible && (
+                            
                             <Pomodoro />
                         )}
-                        <Tooltip hasArrow label='Pomodoro' bg='#1DB954'>
-                            <Button onClick={onClick} _hover={{ bg: '#1DB954' }} bg={'#1DB954'} >
-                                <Icon as={CiPlane} boxSize={6} />
-                            </Button>
+                        <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{base: 'none', md: 'inline-block'}}>
+                    
+                            <IconButton border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
+
                         </Tooltip>
-                    </Flex>
-                    <Flex flex={1} pt={2} justify='center' gap={4}>
-                        <LinkItem
-                            href="https://github.com/xuandai-py"
-                            path={path}
+
+                        <IconWrapper
+                            style={{
+                                paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
+                                justifyContent: 'right'
+                            }}
                         >
-                            {SlSocialGithub}
-                        </LinkItem>
-                        <LinkItem
-                            href="https://www.facebook.com/profile.php?id=100006465675143"
-                            path={path}
-                        >
-                            {SlSocialFacebook}
-                        </LinkItem>
-                        <LinkItem
-                            href="https://www.instagram.com/hermit_crab_1606"
-                            path={path}
-                        >
-                            {SlSocialInstagram}
-                        </LinkItem>
-                        <LinkItem
-                            href="mailto:buinguyenxuandai@gmail.com"
-                            path={path}
-                        >
-                            {SlSocialGoogle}
-                        </LinkItem>
+                            <LinkItem
+                                href="https://github.com/xuandai-py"
+                                path={path}
+                            >
+                                {SlSocialGithub}
+                            </LinkItem>
+                            <LinkItem
+                                href="https://www.facebook.com/profile.php?id=100006465675143"
+                                path={path}
+                            >
+                                {SlSocialFacebook}
+                            </LinkItem>
+                            <LinkItem
+                                href="https://www.instagram.com/hermit_crab_1606"
+                                path={path}
+                            >
+                                {SlSocialInstagram}
+                            </LinkItem>
+                            <LinkItem
+                                href="mailto:buinguyenxuandai@gmail.com"
+                                path={path}
+                            >
+                                {SlSocialGoogle}
+                            </LinkItem>
+                        </IconWrapper>
                     </Flex>
                     <Clock color='#fff' align='center' />
 
-                    <Flex flex={2} justify='center' align={'center'} gap={4}>
+
+                    <IconWrapper style={{ flex: 2, justifyContent: 'left' }} >
                         {data.map((item, index) => (
                             <PlayStaticTrackItem key={index}
                                 href={item.href}
@@ -155,7 +186,7 @@ const Topbar = props => {
                             </PlayStaticTrackItem>
 
                         ))}
-                    </Flex>
+                    </IconWrapper>
                 </Stack>
                 <Flex align="center" >
                     <ThemeToggleButton />
@@ -185,6 +216,10 @@ const data = [
     {
         href: 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677605174/radio/1-minute-rain-medium-6767_ogj1ab.mp3',
         icon: CiCloudDrizzle
+    },
+    {
+        href: 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677853743/radio/driving-in-a-car-6227_v5eveh.mp3',
+        icon: CiDeliveryTruck
     }
 ]
 
