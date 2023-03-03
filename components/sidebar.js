@@ -8,14 +8,7 @@ const Sidebar = ({ children }) => {
 
     return (
         <>
-            <VStack>
-                <Icon as={CiWavePulse1} boxSize={6} />
-                <Icon as={CiWavePulse1} boxSize={6} />
-                <Icon as={CiWavePulse1} boxSize={6} />
-                <Icon as={CiWavePulse1} boxSize={6} />
-                <Icon as={CiWavePulse1} boxSize={6} />
-
-            </VStack>
+            
         </>
     )
 }

@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { ThumbProvider } from '../components/context/thumb'
 import '../styles/styles.css'
 
+
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>

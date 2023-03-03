@@ -1,22 +1,23 @@
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { useContext } from 'react'
 import { useThumbContext } from './context/thumb';
 
+
 export const Player = () => {
+
     
     const playlist = process.env.NEXT_PUBLIC_SONGS_NUMBER
-    const {index, setIndex, trackUri} = useThumbContext()
+    const { index, setIndex, trackUri } = useThumbContext()
     console.log('track: ', trackUri);
 
     const handleClickPrevious = () => {
         setIndex(() => index === 0 ? playlist - 1 : index - 1)
-        
+
     }
 
     const handleClickNext = () => {
         setIndex(() => index < playlist - 1 ? index + 1 : 0)
-        
+
     }
     console.log(index)
 
@@ -24,6 +25,7 @@ export const Player = () => {
         <>
             <AudioPlayer
                 autoPlay
+                loop
                 showFilledProgress={false}
                 showSkipControls={true}
                 showJumpControls={false}
@@ -34,9 +36,7 @@ export const Player = () => {
                 onError={e => console.log(e)}
                 onLoadedData={e => console.log(trackUri)}
                 style={{
-                    width: '220px',
-                    margin: '0 auto',
-                    // background: 'none'
+                    background: 'none'
                 }}
 
                 onClickNext={handleClickNext}
