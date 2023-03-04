@@ -3,7 +3,7 @@ import { TimeIcon } from "@chakra-ui/icons"
 import { Box, Heading } from '@chakra-ui/react'
 import Base from './base'
 
-const Clock = () => {
+const Clock = (props) => {
 
   const [time, setTime] = useState()
 
@@ -18,13 +18,11 @@ const Clock = () => {
 
 
   return (
-    <>
-      <Base>
+      <Base {...props}>
         <Heading size='lg'>
           {time}
         </Heading>
       </Base>
-    </>
   )
 }
 export default Clock
