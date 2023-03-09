@@ -1,17 +1,18 @@
 
-import { Container, Box, Flex, Text, useColorModeValue, useDisclosure, Modal, ModalContent, Button } from '@chakra-ui/react'
-import { useState, useEffect, useRef } from 'react'
-import { CardItem } from '../components/cardItem'
-import { Player } from '../components/player'
-import { ModalInit, ModalItems } from '../components/modal'
-import Timer, { Clock } from '../components/items/timer'
-import Topbar from '../components/topbar'
-import Sidebar from '../components/sidebar'
-import { useFetchTrack } from '../components/fn'
-import { useThumbContext } from '../components/context/thumb'
-import { ArrowBackIcon, ArrowForwardIcon, DragHandleIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { Box, SimpleGrid, Container, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { keyframes, css } from '@emotion/react'
+import { useEffect, useState } from 'react'
+import { useThumbContext } from '../components/hooks/thumb'
+import { useFetchTrack } from '../components/hooks/fn'
+import { ModalInit } from '../components/modal'
+import { Player } from '../components/player'
+import Topbar from '../components/topbar'
+import Column from '../components/todo/column'
+import { ColumnType } from '../components/todo/utils/enums'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const ScrollContainer = styled.div`
   overflow: hidden;
@@ -90,24 +91,31 @@ export default function Home({ data }) {
       <Topbar />
 
       <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} />
-      <Flex align={'center'} justify={'center'} h={'80%'}>
-        COMINGSOON!
-      </Flex>
+      <Box p={4}>
+        <DndProvider backend={HTML5Backend}>
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 5, lg: 10 }}>
+            <Column column={ColumnType.TO_DO} />
+            <Column column={ColumnType.ON_GOING} />
+            <Column column={ColumnType.PENDING} />
+            <Column column={ColumnType.COMPLETED} />
+          </SimpleGrid>
+        </DndProvider>
+      </Box>
       <Flex align={'center'} gap={4} m="0 auto"
         direction={'row'}
-        justify='left'
+        justify={'left'}
         minW={'10em'}
         bgColor="white"
         bg={useColorModeValue('#ffffff2b', '#8c98d247')}
         css={{ backdropFilter: 'blur(5px)' }}
         borderRadius={'xl'}
       >
-        <Player handleClick={onOpen}/>
+        <Player handleClick={onOpen} />
         {/* <Button onClick={() => { onOpen() }} _hover={{ bg: '#1DB954' }} textTransform={'uppercase'} borderRadius={0} bg={'#1DB954'}>
           watch more
         </Button> */}
         <ScrollContainer>
-          <Box onClick={() => { onOpen() }} fontSize={{ base: 'md', xl: 'lg' }} cursor='pointer'>
+          <Box fontSize={{ base: 'md', xl: 'lg' }} cursor='pointer'>
             <ScrollText css={{
               animation: my_animation
             }}>
@@ -119,6 +127,6 @@ export default function Home({ data }) {
         </ScrollContainer>
 
       </Flex>
-    </Container>
+    </Container >
   )
 }

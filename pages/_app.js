@@ -1,6 +1,6 @@
 import Layout from '../components/_layout'
 import { ChakraProvider } from '@chakra-ui/react'
-import { ThumbProvider } from '../components/context/thumb'
+import { ThumbProvider } from '../components/hooks/thumb'
 import '../styles/styles.css'
 import theme from '../components/theme'
 

@@ -1,12 +1,12 @@
 import { Modal, ModalBody, Box, SimpleGrid, ModalContent, ModalOverlay } from '@chakra-ui/react'
 import { CardItem } from './cardItem'
-import { handleChangePlayer, useFetchTrack } from './fn'
+import { handleChangePlayer, useFetchTrack } from './hooks/fn'
 import { useState, useEffect } from 'react'
-import { useThumbContext } from './context/thumb'
+import { useThumbContext } from './hooks/thumb'
 
-export const ModalInit = ({ items, overlay,  setTrackUri, isOpen, onOpen, onClose }) => {
+export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose }) => {
 
-    const {setIndex} = useThumbContext()
+    const { setIndex } = useThumbContext()
     // const [track, setTrack] = useState('')
     const [err, setErr] = useState('')
     // const { status, dataTrack, error } = useFetchTrack(track)
@@ -18,7 +18,7 @@ export const ModalInit = ({ items, overlay,  setTrackUri, isOpen, onOpen, onClos
         if (item && item.id.videoId) {
             // const id = item.id.videoId
             // setTrack(id)
-console.log(index)            
+            console.log(index)
             setIndex(index)
         } else {
             setErr('Something Wrong happened - Let try another one')
