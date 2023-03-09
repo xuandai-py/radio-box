@@ -24,7 +24,7 @@ import { DragHandleIcon } from '@chakra-ui/icons'
 import { useState, useRef } from 'react'
 import { CiSun, CiCloudDrizzle, CiShare2, CiBaseball, CiDeliveryTruck, CiKeyboard, CiTimer, CiTwitter, CiWavePulse1 } from 'react-icons/ci'
 import { SlFire, SlSocialFacebook, SlSocialGithub, SlSocialGoogle, SlSocialInstagram } from 'react-icons/sl'
-import { useThumbContext } from './context/thumb'
+import { useThumbContext } from './hooks/thumb'
 import Pomodoro from './items/pomodoro'
 import Clock from './items/timer'
 import ThemeToggleButton from './toggle-button'
@@ -61,11 +61,11 @@ const PlayStaticTrackItem = ({ href, children, style }) => {
             _focus={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             _active={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             _hover={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
-            bg='none' 
-           border={{base: '1px solid', xl: 'none'}}
-           m={{base: 1, xl: 0}}
-           px={2}
-            >
+            bg='none'
+            border={{ base: '1px solid', xl: 'none' }}
+            m={{ base: 1, xl: 0 }}
+            px={2}
+        >
             <Icon as={children} boxSize={8} />
         </Button>
     )
@@ -206,14 +206,12 @@ const Topbar = props => {
                     <DrawerContent>
                         <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
                         <DrawerBody>
-                            <Flex  align='center' gap={4}>
+                            <Flex align='center' gap={4}>
                                 {visible && (
                                     <Pomodoro />
                                 )}
                                 <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{ base: 'none', md: 'inline-block' }}>
-
                                     <IconButton border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
-
                                 </Tooltip>
 
                                 <IconWrapper
@@ -249,17 +247,17 @@ const Topbar = props => {
                                         {SlSocialGoogle}
                                     </LinkItem>
                                 </IconWrapper>
-                           
-                            <IconWrapper  icon=<DragHandleIcon /> title='Static tracks: ' >
-                                {data.map((item, index) => (
-                                    <PlayStaticTrackItem key={index}
-                                        href={item.href}
-                                    >
-                                        {item.icon}
-                                    </PlayStaticTrackItem>
 
-                                ))}
-                            </IconWrapper>
+                                <IconWrapper icon=<DragHandleIcon /> title='Static tracks: ' >
+                                    {data.map((item, index) => (
+                                        <PlayStaticTrackItem key={index}
+                                            href={item.href}
+                                        >
+                                            {item.icon}
+                                        </PlayStaticTrackItem>
+
+                                    ))}
+                                </IconWrapper>
                             </Flex>
 
                         </DrawerBody>
