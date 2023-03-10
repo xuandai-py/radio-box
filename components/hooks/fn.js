@@ -46,7 +46,7 @@ export const useFetchTrack = (trackId) => {
             } else {
                 try {
                     // 0-10380331
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0' } });
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0-10380331' } });
                     console.log(response);
                     const data = await response.json();
                     cache.current[trackId] = data;

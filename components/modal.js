@@ -30,8 +30,6 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
         // handle 404
     }
 
-
-
     return (
         <Modal scrollBehavior={'outside'} isOpen={isOpen} size={'6xl'} onClose={onClose}>
             {/* {overlay} */}
@@ -52,7 +50,6 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
                             </Box>
                         )
                         )}
-
                     </SimpleGrid>
                 </ModalBody>
             </ModalContent>
