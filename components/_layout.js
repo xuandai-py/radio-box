@@ -8,7 +8,7 @@ const light = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677541/rad
 const dark = 'https://res.cloudinary.com/dxhl09emw/video/upload/v1677677487/radio/inside_-_night_j88h8y.mp4'
 
 const Main = ({ children }) => {
-  const { colorMode} = useColorMode()
+  const { colorMode } = useColorMode()
 
   return (
     <Box as='main'>
@@ -33,8 +33,9 @@ const Main = ({ children }) => {
           {colorMode === 'dark' ?
             <VideoWrapperDark />
             :
-            <VideoWrapperLight/>
+            <VideoWrapperLight />
           }
+
           <Flex
             w={'100%'}
             position={'absolute'}

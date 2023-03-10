@@ -13,19 +13,17 @@ export const Player = (props) => {
 
     const handleClickPrevious = () => {
         setIndex(() => index === 0 ? playlist - 1 : index - 1)
-
     }
 
     const handleClickNext = () => {
         setIndex(() => index < playlist - 1 ? index + 1 : 0)
-
     }
     console.log(index)
 
     return (
         <HStack spacing={5}>
             <AudioPlayer
-                autoPlay
+                // autoPlay
                 loop
                 showFilledProgress={false}
                 showSkipControls={true}
@@ -36,7 +34,6 @@ export const Player = (props) => {
                 onPlay={e => console.log("onPlay")}
                 onError={e => console.log(e)}
                 onLoadedData={e => console.log(trackUri)}
-
                 style={{
                     background: 'none'
                 }}

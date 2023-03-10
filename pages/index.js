@@ -91,16 +91,17 @@ export default function Home({ data }) {
       <Topbar />
 
       <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} />
-      <Box p={4}>
+      {/* <Box p={4}> */}
+      <Flex p={2} my={2} maxH={'80vh'} overflow='auto'>
         <DndProvider backend={HTML5Backend}>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 5, lg: 10 }}>
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 3, md: 5, lg: 10 }}>
             <Column column={ColumnType.TO_DO} />
             <Column column={ColumnType.ON_GOING} />
             <Column column={ColumnType.PENDING} />
             <Column column={ColumnType.COMPLETED} />
           </SimpleGrid>
         </DndProvider>
-      </Box>
+      </Flex>
       <Flex align={'center'} gap={4} m="0 auto"
         direction={'row'}
         justify={'left'}
@@ -111,9 +112,6 @@ export default function Home({ data }) {
         borderRadius={'xl'}
       >
         <Player handleClick={onOpen} />
-        {/* <Button onClick={() => { onOpen() }} _hover={{ bg: '#1DB954' }} textTransform={'uppercase'} borderRadius={0} bg={'#1DB954'}>
-          watch more
-        </Button> */}
         <ScrollContainer>
           <Box fontSize={{ base: 'md', xl: 'lg' }} cursor='pointer'>
             <ScrollText css={{
@@ -125,7 +123,6 @@ export default function Home({ data }) {
             </ScrollText>
           </Box>
         </ScrollContainer>
-
       </Flex>
     </Container >
   )
