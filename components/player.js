@@ -9,7 +9,7 @@ export const Player = (props) => {
 
     const playlist = process.env.NEXT_PUBLIC_SONGS_NUMBER
     const { index, setIndex, trackUri } = useThumbContext()
-    console.log('track: ', trackUri);
+    // console.log('track: ', trackUri);
 
     const handleClickPrevious = () => {
         setIndex(() => index === 0 ? playlist - 1 : index - 1)
@@ -18,7 +18,6 @@ export const Player = (props) => {
     const handleClickNext = () => {
         setIndex(() => index < playlist - 1 ? index + 1 : 0)
     }
-    console.log(index)
 
     return (
         <HStack spacing={5}>

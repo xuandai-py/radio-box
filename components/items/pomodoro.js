@@ -22,7 +22,7 @@ const Pomodoro = () => {
 
     useEffect(() => {
         setDisplayCount(count)
-        console.log(`count: ${count} - display count: ${displayCount} - time: ${time}`)
+        // console.log(`count: ${count} - display count: ${displayCount} - time: ${time}`)
     }, [count, time])
 
     const handleResetTimer = () => {
@@ -38,7 +38,6 @@ const Pomodoro = () => {
 
     const increaseTimeSet = () => {
         setTime(time + 60)
-        console.log(time)
     }
 
     const decreaseTimeSet = () => {

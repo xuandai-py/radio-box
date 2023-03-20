@@ -72,8 +72,6 @@ export async function getStaticProps() {
 
 
 export default function Home({ data }) {
-
-  console.log(data)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [trackId, setTrackId] = useState('')
   const { index, setIndex, trackUri, setTrackUri, allTrack, setAllTrack } = useThumbContext()
@@ -83,10 +81,8 @@ export default function Home({ data }) {
     setTrackId(data.items[index].id.videoId)
     setTrackUri(dataTrack.format?.url)
     setTrackTitle(data.items[index].snippet.title)
-    console.log('log: ', trackUri);
   }, [index])
 
-  console.log(trackId, ' :', trackUri)
   return (
     // <Flex direction={'column'} minH={'100vh'}>
     <Container maxW='container.xl' display={'flex'} flexDirection={'column'}>

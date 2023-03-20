@@ -35,7 +35,6 @@ export const useFetchTrack = (trackId) => {
 
     useEffect(() => {
         let cancelRequest = false;
-        console.log("trackId from hook: ", trackId)
         if (trackId === '') return;
 
         const fetchData = async () => {
@@ -47,7 +46,7 @@ export const useFetchTrack = (trackId) => {
                 try {
                     // 0-10380331
                     const response = await fetch(`${process.env.NEXT_PUBLIC_DLVIDEO}${process.env.NEXT_PUBLIC_YTB_W}${trackId}`, { headers: { Range: 'bytes=0-10380331' } });
-                    console.log(response);
+                    // console.log(response);
                     const data = await response.json();
                     cache.current[trackId] = data;
                     if (cancelRequest) return;

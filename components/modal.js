@@ -10,15 +10,12 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
     // const [track, setTrack] = useState('')
     const [err, setErr] = useState('')
     // const { status, dataTrack, error } = useFetchTrack(track)
-    // console.log('dataTrack: ', dataTrack)
     // setTrackUri(dataTrack.format?.url)
 
 
     const handleChangePlayer = (item, index) => {
         if (item && item.id.videoId) {
-            // const id = item.id.videoId
-            // setTrack(id)
-            console.log(index)
+            
             setIndex(index)
         } else {
             setErr('Something Wrong happened - Let try another one')
