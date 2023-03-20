@@ -35,6 +35,13 @@ function Task({
     handleDelete(task.id);
   };
 
+  // .section::-webkit-scrollbar-thumb {
+  //   background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+  //   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+  //   border-radius: 100px;
+  // }
+
+
   return (
     <ScaleFade in={true} unmountOnExit>
       <Box
@@ -43,8 +50,8 @@ function Task({
         role="group"
         position="relative"
         rounded="lg"
-        w={{base: 200, md: 'unset'}}
-        p={4}
+        w={{ base: 200, md: 'unset' }}
+        p={2}
         boxShadow="xl"
         cursor="grab"
         fontWeight="bold"
@@ -72,15 +79,17 @@ function Task({
         <AutoResizeTextarea
           value={task.title}
           fontWeight="semibold"
+          // sx={scrollStyle}
           cursor="inherit"
           border="none"
           p={0}
           resize="none"
           minH={70}
-          maxH={{base: 100, md: 200}}
+          maxH={{ base: 100, md: 200 }}
           focusBorderColor="none"
           color="gray.700"
           onChange={handleTitleChange}
+          className='autoResize'
         />
       </Box>
     </ScaleFade>
