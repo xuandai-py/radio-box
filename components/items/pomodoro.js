@@ -45,7 +45,7 @@ const Pomodoro = () => {
         if (time > 120) setTime(time - 60)
     }
     return (
-        <Box>
+        <Box display={{base: 'none', md: 'unset'}}>
             <HStack>
                 <Base type='pomodoro'>
                     <Icon boxSize={3} as={AddIcon} onClick={increaseTimeSet} />

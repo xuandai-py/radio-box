@@ -16,7 +16,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const ScrollContainer = styled.div`
   overflow: hidden;
-  @media screen and (max-width: 300px) {
+  @media screen and (max-width: 680px) {
     display: none;
   }
 `
@@ -36,6 +36,7 @@ const my_animation = keyframes`
 
 const ScrollText = styled.p`
   white-space: nowrap;
+  width: 30vw;
   -moz-transform: translateX(100%);
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
@@ -87,14 +88,15 @@ export default function Home({ data }) {
 
   console.log(trackId, ' :', trackUri)
   return (
-    <Container maxW='container.xl' position='relative' h='100vh' p={2}>
+    // <Flex direction={'column'} minH={'100vh'}>
+    <Container maxW='container.xl' display={'flex'} flexDirection={'column'}>
       <Topbar />
 
       <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} />
       {/* <Box p={4}> */}
-      <Flex p={2} my={2} maxH={'80vh'} overflow='auto'>
+      <Flex p={4} my={2} overflow='auto' flexGrow={1} h={'80vh'} borderRadius={'lg'} zIndex={99}>
         <DndProvider backend={HTML5Backend}>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 3, md: 5, lg: 10 }}>
+          <SimpleGrid columns={{ base: 1, md: 4 }} w={'full'} spacing={{ base: 3, md: 5, lg: 10 }}>
             <Column column={ColumnType.TO_DO} />
             <Column column={ColumnType.ON_GOING} />
             <Column column={ColumnType.PENDING} />
@@ -104,12 +106,12 @@ export default function Home({ data }) {
       </Flex>
       <Flex align={'center'} gap={4} m="0 auto"
         direction={'row'}
-        justify={'left'}
-        minW={'10em'}
+        // justify={'left'}
+        // minW={'10em'}
         bgColor="white"
         bg={useColorModeValue('#ffffff2b', '#8c98d247')}
         css={{ backdropFilter: 'blur(5px)' }}
-        borderRadius={'xl'}
+        borderRadius={'lg'}
       >
         <Player handleClick={onOpen} />
         <ScrollContainer>
@@ -124,6 +126,7 @@ export default function Home({ data }) {
           </Box>
         </ScrollContainer>
       </Flex>
-    </Container >
+    </Container>
+    // </Flex > 
   )
 }

@@ -53,9 +53,9 @@ function Column({ column }: { column: ColumnType }) {
   // ));
 
   return (
-    <Stack direction={{ base: 'row', md: 'column' }}>
-      <Stack direction={{ base: 'column', md: 'row' }} minW={{base: 24, md: 'unset'}}>
-        <Heading fontSize="md"  letterSpacing="wide">
+    <Flex direction={{ base: 'row', md: 'column' }} gap={2}>
+      <Stack direction={{ base: 'column', md: 'row' }} minW={{ base: 24, md: 'unset' }}>
+        <Heading fontSize="md" letterSpacing="wide">
           <Badge
             px={2}
             w='full'
@@ -84,11 +84,12 @@ function Column({ column }: { column: ColumnType }) {
       <Stack
         ref={dropRef}
         direction={{ base: 'row', md: 'column' }}
-        h={{ base: 150, md: 420 }}
-        p={{ base: 2, md: 4 }}
-        w={{base: 'full'}}
+        h={{ base: 150, md: '100%' }}
+        p={{ base: 2, md: 3 }}
+        w={{ base: 'full', md: '200' }}
         spacing={4}
-        bgColor={useColorModeValue('gray.50', 'gray.900')}
+        // bg={useColorModeValue('#F7FAFC', '#171923')}
+        // css={{ backdropFilter: 'blur(5px)' }}
         rounded="lg"
         boxShadow="md"
         overflow="auto"
@@ -100,7 +101,7 @@ function Column({ column }: { column: ColumnType }) {
           : <Heading as={'h5'} size='sm'>no task here!!!</Heading>
         }
       </Stack>
-    </Stack>
+    </Flex>
   );
 }
 

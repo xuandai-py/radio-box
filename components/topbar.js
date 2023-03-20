@@ -116,7 +116,7 @@ const Topbar = props => {
             bg={useColorModeValue('#cfd3b280', '#20202380')}
             css={{ backdropFilter: 'blur(5px)' }}
             borderRadius={'lg'}
-            //   zIndex={2}
+              zIndex={101}
             {...props}
         >
             <Container
@@ -140,19 +140,19 @@ const Topbar = props => {
 
                 >
                     <Flex flex={2} align='center' justify='right' gap={4}>
+                     
                         {visible && (
                             <Pomodoro />
                         )}
                         <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{ base: 'none', md: 'inline-block' }}>
-
-                            <IconButton border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
-
+                            <IconButton display={{base: 'none', md: 'inline-flex'}} border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
                         </Tooltip>
 
                         <IconWrapper
                             style={{
                                 paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
-                                justifyContent: 'right'
+                                justifyContent: 'right',
+                               
                             }}
                             icon=<CiShare2 />
                             title='Reach me via: '
