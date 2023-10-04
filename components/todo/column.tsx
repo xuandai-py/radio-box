@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import {
   Badge,
@@ -14,7 +14,7 @@ import useColumnTasks from './hooks/useColumnTasks';
 import { ColumnType } from './utils/enums';
 import Task from './task';
 import { TaskModel } from './utils/models';
-
+import { useIsClient } from 'usehooks-ts'
 
 const ColumnColorScheme: Record<ColumnType, string> = {
   Todo: 'gray',
@@ -33,24 +33,8 @@ function Column({ column }: { column: ColumnType }) {
     updateTask,
   } = useColumnTasks(column);
 
-  const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
-
-  const [tasksHook, setTasksHook] = useState<TaskModel[]>([])
-
-  useEffect(() => {
-    setTasksHook(tasks)
-  }, [tasks])
-
-  // const ColumnTasks = tasks?.map((task, index) => (
-  //   <Task
-  //     key={task.id}
-  //     task={task}
-  //     index={index}
-  //     onDropHover={swapTasks}
-  //     onUpdate={updateTask}
-  //     onDelete={deleteTask}
-  //   />
-  // ));
+  const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom); 
+  const isClient = useIsClient();
 
   return (
     <Flex direction={{ base: 'row', md: 'column' }} gap={2}>
@@ -95,11 +79,12 @@ function Column({ column }: { column: ColumnType }) {
         overflow="auto"
         opacity={isOver ? 0.85 : 1}
       >
-        {tasksHook && tasksHook?.length > 0 ? (tasksHook?.map((task, index) => (
-          <Task key={task.id} index={index} task={task} onDelete={deleteTask} onUpdate={updateTask} onDropHover={swapTasks} />
+        {isClient && tasks && tasks.length > 0 ? (tasks?.map((task, index) => (
+          <Task key={task.id} index={index} task={task}  onDelete={deleteTask} onUpdate={updateTask} onDropHover={swapTasks} />
         )))
           : <Heading as={'h5'} size='sm'>no task here!!!</Heading>
         }
+        {/* {ColumnTasks } */}
       </Stack>
     </Flex>
   );

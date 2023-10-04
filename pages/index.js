@@ -1,6 +1,6 @@
 
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
-import { Box, SimpleGrid, Container, Flex, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Box, SimpleGrid, Container, Flex, useColorModeValue, useDisclosure, Textarea } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
@@ -85,7 +85,7 @@ export default function Home({ data }) {
 
   return (
     // <Flex direction={'column'} minH={'100vh'}>
-    <Container maxW='container.xl' display={'flex'} flexDirection={'column'}>
+    <Container maxW='container.xl' p={0} display={'flex'} flexDirection={'column'}>
       <Topbar />
 
       <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} />
@@ -100,6 +100,7 @@ export default function Home({ data }) {
           </SimpleGrid>
         </DndProvider>
       </Flex>
+     
       <Flex align={'center'} gap={4} m="0 auto"
         direction={'row'}
         // justify={'left'}

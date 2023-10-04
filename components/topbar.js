@@ -17,7 +17,7 @@ import {
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton,
+    DrawerCloseButton, FormControl, FormLabel, Switch
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { DragHandleIcon } from '@chakra-ui/icons'
@@ -38,6 +38,7 @@ const LinkItem = ({ href, path, target, children, ...props }) => {
             as={NextLink}
             href={href}
             scroll={false}
+            display='flex'
             px={2}
             py={1}
             bg={active ? 'grassTeal' : undefined}
@@ -45,7 +46,7 @@ const LinkItem = ({ href, path, target, children, ...props }) => {
             target='blank'
             {...props}
         >
-            <Icon as={children} boxSize={6} />
+            <Icon as={children} boxSize={7} />
         </Link>
     )
 }
@@ -62,11 +63,11 @@ const PlayStaticTrackItem = ({ href, children, style }) => {
             _active={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             _hover={{ bg: useColorModeValue('#1DB954', '#1DB954') }}
             bg='none'
-            border={{ base: '1px solid', xl: 'none' }}
-            m={{ base: 1, xl: 0 }}
-            px={2}
+            border={{ base: '1px solid', md: 'none' }}
+            m={{ base: 1, md: 0 }}
+            px={{ base: 2, md: 1, xl: 2 }}
         >
-            <Icon as={children} boxSize={8} />
+            <Icon as={children} boxSize={{ base: 8, md: 7, lg: 8 }} />
         </Button>
     )
 }
@@ -77,11 +78,11 @@ const MenuLink = forwardRef((props, ref) => (
 
 const IconWrapper = ({ style, children, icon, title }) => (
     <>
-        <Flex display={{ base: 'none', xl: 'flex' }} align={'center'} gap={4} style={style}>
+        <Flex display={{ base: 'none', md: 'flex' }} px={1} align={'center'} gap={{ base: 4, md: 2, lg: 4 }} style={style}>
             {children}
         </Flex>
 
-        <Flex display={{ base: 'flex', xl: 'none' }} align={'center'} gap={4} style={style}>
+        <Flex display={{ base: 'flex', md: 'none' }} align={'center'} gap={{ base: 4, md: 2, lg: 4 }} style={style}>
             <Popover isLazy>
                 <PopoverTrigger>
                     <IconButton aria-label='Contact' icon={{ ...icon }} />
@@ -90,7 +91,7 @@ const IconWrapper = ({ style, children, icon, title }) => (
                     <PopoverHeader fontWeight='semibold'>{title}</PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <PopoverBody>
+                    <PopoverBody display={'flex'}>
                         {children}
                     </PopoverBody>
                 </PopoverContent>
@@ -105,150 +106,120 @@ const Topbar = props => {
     const [visible, setVisible] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
-    const onClick = () => setVisible(!visible)
     return (
-        <Box
+        <Flex
             as="nav"
             w="100%"
-            py={{ base: 1, xl: 0 }}
+            p={{ base: 1, xl: 0 }}
             // m="0 auto"
             // bgColor="white"
-            bg={useColorModeValue('#cfd3b280', '#20202380')}
-            css={{ backdropFilter: 'blur(5px)' }}
-            borderRadius={'lg'}
-              zIndex={101}
+
+            zIndex={101}
             {...props}
         >
-            <Container
+            {/* <Container
                 display="flex"
-                px={2}
-                maxW="container.xl"
+                px="2"
+                maxW="container.lg"
                 wrap="wrap"
                 align="center"
-                justifyContent={'space-between'}
-                gap={2}
+                justifyContent="space-between"
+                bg={useColorModeValue('#cfd3b280', '#20202380')}
+                css={{ backdropFilter: 'blur(5px)' }}
+                borderRadius={'lg'}
             >
                 <Flex align="center" >
                     <Image src='https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg' boxSize={'40px'} objectFit='cover' />
                 </Flex>
+                <Clock color='#fff' align='center' style={{ display: useBreakpointValue({ base: 'none', sm: 'block' }, { fallback: 'sm' }) }} />
                 <Stack
                     direction={{ base: 'row', md: 'row' }}
-                    display={{ base: 'none', sm: 'flex' }}
+                    // display={{ base: 'none', sm: 'flex' }}
                     alignItems="center"
-                    flexGrow={1}
+                    // flexGrow={1}
+                justifyContent="space-around"
+
                     spacing={4}
-
                 >
-                    <Flex flex={2} align='center' justify='right' gap={4}>
-                     
-                        {visible && (
-                            <Pomodoro />
-                        )}
-                        <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{ base: 'none', md: 'inline-block' }}>
-                            <IconButton display={{base: 'none', md: 'inline-flex'}} border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
-                        </Tooltip>
-
-                        <IconWrapper
-                            style={{
-                                paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
-                                justifyContent: 'right',
-                               
-                            }}
-                            icon=<CiShare2 />
-                            title='Reach me via: '
-                        >
-                            <LinkItem
-                                href="https://github.com/xuandai-py"
-                                path={path}
-                            >
-                                {SlSocialGithub}
-                            </LinkItem>
-                            <LinkItem
-                                href="https://www.facebook.com/profile.php?id=100006465675143"
-                                path={path}
-                            >
-                                {SlSocialFacebook}
-                            </LinkItem>
-                            <LinkItem
-                                href="https://www.instagram.com/hermit_crab_1606"
-                                path={path}
-                            >
-                                {SlSocialInstagram}
-                            </LinkItem>
-                            <LinkItem
-                                href="mailto:buinguyenxuandai@gmail.com"
-                                path={path}
-                            >
-                                {SlSocialGoogle}
-                            </LinkItem>
-                        </IconWrapper>
-                    </Flex>
-                    <Clock color='#fff' align='center' style={{ display: useBreakpointValue({ base: 'none', sm: 'block' }, { fallback: 'sm' }) }} />
-                    <IconWrapper style={{ flex: 2, justifyContent: 'left' }} icon=<DragHandleIcon /> title='Static tracks: ' >
-                        {data.map((item, index) => (
-                            <PlayStaticTrackItem key={index}
-                                href={item.href}
-                            >
-                                {item.icon}
-                            </PlayStaticTrackItem>
-
-                        ))}
-                    </IconWrapper>
+                    {visible && (
+                        <Pomodoro />
+                    )}
+                    <IconButton ref={btnRef} onClick={onOpen} icon={<DragHandleIcon />} mr={2} />
+                    <ThemeToggleButton />
                 </Stack>
+            </Container> */}
 
-                <Drawer
-                    isOpen={isOpen}
-                    placement='bottom'
-                    onClose={onClose}
-                    finalFocusRef={btnRef}
+            <Container
+                display="flex"
+                px={2}
+                py={1}
+                maxW="container.lg"
+                wrap="wrap"
+                align="center"
+                justifyContent="space-between"
+                bg={useColorModeValue('#cfd3b280', '#20202380')}
+                css={{ backdropFilter: 'blur(5px)' }}
+                borderRadius="lg"
+            >
+                <Flex align="center" flex="1">
+                    <Image
+                        src="https://res.cloudinary.com/dxhl09emw/image/upload/v1677746843/radio/Frame_16_kqw1wj.svg"
+                        boxSize="40px"
+                        objectFit="cover"
+                    />
+                </Flex>
+                <Box  >
+                    <Clock
+                        color="#fff"
+                        align="center"
+                        style={{
+                            display: useBreakpointValue({ base: 'none', sm: 'block' }, { fallback: 'sm' }),
+                        }}
+                    />
+                </Box>
+                <Stack
+                    direction={{ base: 'row', md: 'row' }}
+                    alignItems="center"
+                    justifyContent="right"
+                    spacing={2}
+                    flex="1"
                 >
-                    <DrawerOverlay />
-                    <DrawerContent>
-                        <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
-                        <DrawerBody>
-                            <Flex align='center' gap={4}>
-                                {visible && (
-                                    <Pomodoro />
-                                )}
-                                <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{ base: 'none', md: 'inline-block' }}>
-                                    <IconButton border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
-                                </Tooltip>
+                    {visible && <Pomodoro />}
+                    <IconButton ref={btnRef} onClick={onOpen} icon={<DragHandleIcon />} mr={2} />
+                    <ThemeToggleButton />
+                </Stack>
+            </Container>
+            <Drawer
+                isOpen={isOpen}
+                placement='bottom'
+                onClose={onClose}
+                finalFocusRef={btnRef}
+            >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerHeader borderBottomWidth='1px'>Basic Options</DrawerHeader>
+                    <DrawerBody>
+                        <Flex align='center' gap={{ base: 6, md: 4 }} justifyContent={{ base: 'left', md: 'space-around' }}>
 
-                                <IconWrapper
-                                    style={{
-                                        paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
-                                        justifyContent: 'right'
-                                    }}
-                                    icon=<CiShare2 />
-                                    title='Reach me via: '
-                                >
-                                    <LinkItem
-                                        href="https://github.com/xuandai-py"
-                                        path={path}
-                                    >
-                                        {SlSocialGithub}
-                                    </LinkItem>
-                                    <LinkItem
-                                        href="https://www.facebook.com/profile.php?id=100006465675143"
-                                        path={path}
-                                    >
-                                        {SlSocialFacebook}
-                                    </LinkItem>
-                                    <LinkItem
-                                        href="https://www.instagram.com/hermit_crab_1606"
-                                        path={path}
-                                    >
-                                        {SlSocialInstagram}
-                                    </LinkItem>
-                                    <LinkItem
-                                        href="mailto:buinguyenxuandai@gmail.com"
-                                        path={path}
-                                    >
-                                        {SlSocialGoogle}
-                                    </LinkItem>
-                                </IconWrapper>
+                            <FormControl display='flex' w={'auto'} alignItems='center'>
+                                <FormLabel htmlFor='Pomodoro' mb='0'>
+                                    Pomodoro timer
+                                </FormLabel>
+                                <Switch id='email-alerts' colorScheme='whatsapp' onChange={() => setVisible(!visible)} />
+                            </FormControl>
 
-                                <IconWrapper icon=<DragHandleIcon /> title='Static tracks: ' >
+
+
+                            <IconWrapper
+                                icon={<DragHandleIcon />}
+                                title='Static tracks: '
+                                style={{
+                                    border: '1px solid ',
+                                    borderRadius: 8
+                                }}
+                            >
+                                <Box>
+
                                     {data.map((item, index) => (
                                         <PlayStaticTrackItem key={index}
                                             href={item.href}
@@ -257,19 +228,51 @@ const Topbar = props => {
                                         </PlayStaticTrackItem>
 
                                     ))}
-                                </IconWrapper>
-                            </Flex>
+                                </Box>
+                            </IconWrapper>
 
-                        </DrawerBody>
-                    </DrawerContent>
-                </Drawer>
-                <Flex align="center" >
-                    <IconButton display={{ sm: 'none' }} ref={btnRef} onClick={onOpen} icon={<DragHandleIcon />} mr={2} />
+                            <IconWrapper
+                                style={{
+                                    // paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
+                                    // justifyContent: 'right',
+                                    border: '1px solid ',
+                                    padding: 3,
+                                    borderRadius: '10px'
+                                }}
+                                icon={<CiShare2 />}
+                                title='Reach me via: '
+                            >
+                                <LinkItem
+                                    href="https://github.com/xuandai-py"
+                                    path={path}
+                                >
+                                    {SlSocialGithub}
+                                </LinkItem>
+                                <LinkItem
+                                    href="https://www.facebook.com/profile.php?id=100006465675143"
+                                    path={path}
+                                >
+                                    {SlSocialFacebook}
+                                </LinkItem>
+                                <LinkItem
+                                    href="https://www.instagram.com/hermit_crab_1606"
+                                    path={path}
+                                >
+                                    {SlSocialInstagram}
+                                </LinkItem>
+                                <LinkItem
+                                    href="mailto:buinguyenxuandai@gmail.com"
+                                    path={path}
+                                >
+                                    {SlSocialGoogle}
+                                </LinkItem>
+                            </IconWrapper>
+                        </Flex>
 
-                    <ThemeToggleButton />
-                </Flex>
-            </Container>
-        </Box>
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
+        </Flex>
     )
 }
 
@@ -305,3 +308,62 @@ const data = [
 ]
 
 export default Topbar
+
+
+{/* <Flex align="center" >
+                        <IconButton display={{ sm: 'none' }} ref={btnRef} onClick={onOpen} icon={<DragHandleIcon />} mr={2} />
+
+                    </Flex> */}
+
+{/* <Flex flex={2} align='center' justify='right' gap={4}> */ }
+
+{/* <Tooltip hasArrow label='Pomodoro' bg='#1DB954' display={{ base: 'none', md: 'inline-block' }}>
+                            <IconButton display={{ base: 'none', md: 'inline-flex' }} border={'1px solid #1DB954'} bg={'none'} fontSize={20} color={'#1DB954'} onClick={onClick} aria-label='Pomodoro' size='md' icon={<CiTimer />} />
+                        </Tooltip> */}
+
+{/* <IconWrapper
+                            style={{
+                                paddingTop: useBreakpointValue({ base: 0, xl: '6px' }),
+                                justifyContent: 'right',
+
+                            }}
+                            icon={<CiShare2 />}
+                            title='Reach me via: '
+                        >
+                            <LinkItem
+                                href="https://github.com/xuandai-py"
+                                path={path}
+                            >
+                                {SlSocialGithub}
+                            </LinkItem>
+                            <LinkItem
+                                href="https://www.facebook.com/profile.php?id=100006465675143"
+                                path={path}
+                            >
+                                {SlSocialFacebook}
+                            </LinkItem>
+                            <LinkItem
+                                href="https://www.instagram.com/hermit_crab_1606"
+                                path={path}
+                            >
+                                {SlSocialInstagram}
+                            </LinkItem>
+                            <LinkItem
+                                href="mailto:buinguyenxuandai@gmail.com"
+                                path={path}
+                            >
+                                {SlSocialGoogle}
+                            </LinkItem>
+                        </IconWrapper> */}
+{/* </Flex> */ }
+{/* <IconWrapper style={{ flex: 2, justifyContent: 'left' }} icon={<DragHandleIcon />} title='Static tracks: ' >
+                        {data.map((item, index) => (
+                            <PlayStaticTrackItem key={index}
+                                href={item.href}
+                            >
+                                {item.icon}
+                            </PlayStaticTrackItem>
+
+                        ))}
+                        
+                    </IconWrapper> */}

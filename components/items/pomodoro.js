@@ -1,8 +1,4 @@
-/**
- * b1: nhan vao button: popup hien thi o ben trai bao gom : [30:00] - {reset icon} - {play/stop}
- * nhan play > countdown tu 30 . nhan stop: dung dong ho
- * nhan reset > set timer tro lai 30
- */
+
 
 import { useState, useEffect } from 'react'
 import { SlControlPlay, SlControlPause, SlRefresh } from 'react-icons/sl'
@@ -37,14 +33,16 @@ const Pomodoro = () => {
     }
 
     const increaseTimeSet = () => {
+        setResetTimer(true)
         setTime(time + 60)
     }
 
     const decreaseTimeSet = () => {
+        setResetTimer(true)
         if (time > 120) setTime(time - 60)
     }
     return (
-        <Box display={{base: 'none', md: 'unset'}}>
+        <Box display={{ base: 'none', md: 'unset' }}>
             <HStack>
                 <Base type='pomodoro'>
                     <Icon boxSize={3} as={AddIcon} onClick={increaseTimeSet} />

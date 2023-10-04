@@ -129,9 +129,10 @@ export const useCountdown = (time, timerState, resetTimer) => {
         if (resetTimer) {
             setCountDown(time)
         }
-        if (timerState) {
-            countDown > 0 && setTimeout(() => setCountDown(countDown - 1), 1000);
-        } else countDown
+        if (timerState && countDown > 0) {
+            const timeout = setTimeout(() => setCountDown(countDown - 1), 1000);
+            return () => clearTimeout(timeout);
+        }
     }, [countDown, time, timerState, resetTimer]);
     return secondToMinute(countDown)
 }

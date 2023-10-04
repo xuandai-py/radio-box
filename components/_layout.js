@@ -22,7 +22,7 @@ const Main = ({ children }) => {
         <meta name="author" content="Xuandai" />
       </Head>
       {/* <Header path={router.asPath}/> */}
-      <Container maxW='container.2xl' p='0'>
+      <Container maxW='container.2xl' p={0}>
         <Flex
           w={'100%'}
           // minH={{base: '85vh', md: '60vh'}}
@@ -40,7 +40,7 @@ const Main = ({ children }) => {
             w={'100%'}
             position={'absolute'}
             justify={'center'}
-            px={useBreakpointValue({ base: 4, md: 8 })}
+            px={useBreakpointValue({ base: 4, md: 6 })}
           // bgGradient={'linear(to-r, blackAlpha.600, transparent)'}
           >
             {children}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, IconButton, ScaleFade } from '@chakra-ui/react';
+import { Box, IconButton, ScaleFade, Textarea } from '@chakra-ui/react';
 import _ from 'lodash';
 import { memo } from 'react';
 import { useTaskDragAndDrop } from './hooks/useTaskDragAndDrop';
@@ -25,9 +25,11 @@ function Task({
     { task, index: index },
     handleDropHover,
   );
+  const [te, setTe] = React.useState('te');
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
+   
     handleUpdate(task.id, { ...task, title: newTitle });
   };
 
@@ -40,7 +42,6 @@ function Task({
   //   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
   //   border-radius: 100px;
   // }
-
 
   return (
     <ScaleFade in={true} unmountOnExit>
@@ -78,6 +79,7 @@ function Task({
         />
         <AutoResizeTextarea
           value={task.title}
+          onChange={handleTitleChange}
           fontWeight="semibold"
           // sx={scrollStyle}
           cursor="inherit"
@@ -88,7 +90,6 @@ function Task({
           maxH={{ base: 100, md: 200 }}
           focusBorderColor="none"
           color="gray.700"
-          onChange={handleTitleChange}
           className='autoResize'
         />
       </Box>
