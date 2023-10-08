@@ -12,10 +12,9 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
     // const { status, dataTrack, error } = useFetchTrack(track)
     // setTrackUri(dataTrack.format?.url)
 
-
     const handleChangePlayer = (item, index) => {
         if (item && item.id.videoId) {
-            
+
             setIndex(index)
         } else {
             setErr('Something Wrong happened - Let try another one')
@@ -37,7 +36,7 @@ export const ModalInit = ({ items, overlay, setTrackUri, isOpen, onOpen, onClose
             <ModalContent bg='none' py={4} mx={{ base: 4, md: 5, xl: 0 }}>
                 <ModalBody>
                     <SimpleGrid columns={[1, 2, 3, 4]} spacing='30px'>
-                        {items.map((item, index) => (
+                        {items && items.length > 0 && items.map((item, index) => (
                             <Box key={item.id.videoId} onClick={() => handleChangePlayer(item, index)} cursor='pointer'>
                                 <CardItem
                                     title={item.snippet.title}

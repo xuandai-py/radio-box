@@ -2,14 +2,15 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { useThumbContext } from './hooks/thumb';
 import { DragHandleIcon } from '@chakra-ui/icons'
-import { IconButton, HStack, useBreakpointValue } from '@chakra-ui/react';
+import { IconButton, HStack, useDisclosure, useBreakpointValue } from '@chakra-ui/react';
+import { ModalInit } from '../components/modal'
 
 export const Player = (props) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
 
-    const playlist = process.env.NEXT_PUBLIC_SONGS_NUMBER
+    const playlist = props.data?.length;
     const { index, setIndex, trackUri } = useThumbContext()
-    // console.log('track: ', trackUri);
 
     const handleClickPrevious = () => {
         setIndex(() => index === 0 ? playlist - 1 : index - 1)
@@ -19,6 +20,7 @@ export const Player = (props) => {
         setIndex(() => index < playlist - 1 ? index + 1 : 0)
     }
 
+    console.log('uri at player: ', trackUri);
     return (
         <HStack spacing={5}>
             <AudioPlayer
@@ -39,7 +41,9 @@ export const Player = (props) => {
                 onClickNext={handleClickNext}
                 onClickPrevious={handleClickPrevious}
             />
-            <IconButton onClick={props.handleClick} aria-label='View more tracks' icon={<DragHandleIcon />} />
+            <IconButton onClick={onOpen} aria-label='View more tracks' icon={<DragHandleIcon />} />
+            <ModalInit items={props.data} isOpen={isOpen} onClose={onClose} />
+
         </HStack>
 
     )
