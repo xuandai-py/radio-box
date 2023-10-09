@@ -5,7 +5,14 @@ export default async function streaming(req, res) {
         const url = req.query.url;
         const videoId = ytdl.getURLVideoID(url)
         const info = await ytdl.getInfo(url)
-        let options = { highWaterMark: 1 << 12 };
+        let options = { 
+            highWaterMark: 1 << 12 ,
+            filter: 'audioonly',
+            quaylity: 'highestaudio',
+            // isHLS: true,
+            isLive: false
+
+        };
 
         // if (info.videoDetails.isLive) {
         //     const hlsFormats = ytdl.filterFormats(info.formats, (format) => format.isHLS)
@@ -22,7 +29,7 @@ export default async function streaming(req, res) {
         //     }
         // }
         // const format = ytdl.filterFormats(info.formats, {filter: 'audioonly'})
-        let format = ytdl.chooseFormat(info.formats,  {filter: 'audioonly'});
+        let format = ytdl.chooseFormat(info.formats,  options);
         const data = {
             url: "https://www.youtube.com/embed/" + videoId,
             format: format,

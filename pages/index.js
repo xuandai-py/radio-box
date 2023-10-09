@@ -63,32 +63,37 @@ const ScrollText = styled.p`
 
 export async function getStaticProps() {
   const listItems = await fetch(`${process.env.YTB_API}?part=snippet,id&q=lofi&type=video&eventType=completed&maxResults=${process.env.NEXT_PUBLIC_SONGS_NUMBER}&key=${process.env.GG_API}`)
+  const filteredResults = await listItems.json()
+    .then(res => res.items.filter(item => item.snippet.liveBroadcastContent !== 'live'))
+    .catch(err => console.error('Unable to fetch data or filter', err));
+  // const filteredResults = re.items.filter(item => item.snippet.liveBroadcastContent !== 'live');
   return {
     props: {
-      data: await listItems.json()
+      data: filteredResults
     }
   }
 }
 
 
 export default function Home({ data }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  // const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log('data from fil;: ', data)
   const [trackId, setTrackId] = useState('')
   const { index, setIndex, trackUri, setTrackUri, allTrack, setAllTrack } = useThumbContext()
-  const [trackTitle, setTrackTitle] = useState('')
+  // const [trackTitle, setTrackTitle] = useState('')
   const { status, dataTrack, error } = useFetchTrack(trackId)
   useEffect(() => {
-    setTrackId(data.items[index].id.videoId)
+    setTrackId(data[index].id.videoId)
     setTrackUri(dataTrack.format?.url)
-    setTrackTitle(data.items[index].snippet.title)
-  }, [index])
+    // setTrackTitle(data.items[index].snippet.title)
+  }, [index, status])
 
   return (
     // <Flex direction={'column'} minH={'100vh'}>
     <Container maxW='container.xl' p={0} display={'flex'} flexDirection={'column'}>
       <Topbar />
 
-      <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} />
+      {/* <ModalInit items={data.items} isOpen={isOpen} onClose={onClose} /> */}
       {/* <Box p={4}> */}
       <Flex p={4} my={2} overflow='auto' flexGrow={1} h={'80vh'} borderRadius={'lg'} zIndex={99}>
         <DndProvider backend={HTML5Backend}>
@@ -100,7 +105,7 @@ export default function Home({ data }) {
           </SimpleGrid>
         </DndProvider>
       </Flex>
-     
+
       <Flex align={'center'} gap={4} m="0 auto"
         direction={'row'}
         // justify={'left'}
@@ -110,8 +115,8 @@ export default function Home({ data }) {
         css={{ backdropFilter: 'blur(5px)' }}
         borderRadius={'lg'}
       >
-        <Player handleClick={onOpen} />
-        <ScrollContainer>
+        <Player data={data} />
+        {/* <ScrollContainer>
           <Box fontSize={{ base: 'md', xl: 'lg' }} cursor='pointer'>
             <ScrollText css={{
               animation: my_animation
@@ -121,7 +126,7 @@ export default function Home({ data }) {
               <ArrowBackIcon mx={2} />
             </ScrollText>
           </Box>
-        </ScrollContainer>
+        </ScrollContainer> */}
       </Flex>
     </Container>
     // </Flex > 
